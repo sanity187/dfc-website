@@ -1,75 +1,110 @@
-# Dallas Skydive Center — Official Website & Content Engine
+# Dallas Skydive Center — Official Website & Publishing Platform
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Database](https://img.shields.io/badge/Turso_DB-libSQL-44cc11?style=flat&logo=sqlite)](https://turso.tech/)
 
-The official website and publishing platform for **Dallas Skydive Center**, the premier USPA-certified skydiving dropzone serving the Dallas–Fort Worth metroplex. The platform offers high-altitude tandem skydiving bookings, solo licensing courses (AFF), fleet safety specifications, bilingual content localization, and an automated database-driven articles engine with embedded media streaming.
+The official web platform and high-conversion content engine for **Dallas Skydive Center**, serving the Dallas–Fort Worth metroplex with tandem skydiving reservations, solo licensing programs (AFF), safety fleet specifications, bilingual content localization, automated TursoDB article publishing, universal media streaming, and isolated campaign landing pages for Google Ads / PPC marketing.
 
 ---
 
-## 🌟 Key Architecture & Features
+## 🎨 Theme & Styling System
 
-### 1. Database-Driven Articles Engine (`/articles`)
-- **Zero 404s via Hybrid SSG + Dynamic ISR**: Pre-renders known articles at build time (`generateStaticParams`) while querying TursoDB on-demand for newly published articles (`dynamicParams = true`, `revalidate = 60`).
-- **Markdown & HTML Support**: Automatically parses Markdown (`marked`) or raw HTML with responsive typography styles (`.article-prose`).
-- **Dynamic Category & Tag Filtering**: Real-time client-side search, category tabs, and active tag filtering.
-- **Dynamic Author Profile Hydration**: Resolves author names and bios directly from the `users` profile table, generating sharp brand initials badges (e.g. `TS` for Travis Starks) or displaying custom photo avatars.
-- **Author Recent Articles**: Displays other recent articles by that author directly within the author card, with dedicated author directory links (`/articles?author=...`).
+The application features a modern, high-contrast visual design system with seamless **Light and Dark mode** support:
 
-### 2. Universal Media Player & Video Hero
-- **Multi-Source Video Support**: Supports YouTube URLs (`watch`, `youtu.be`, `embed`, `shorts`) and direct CDN streams (`.mp4`, `.webm`, `.mov`, DigitalOcean Spaces, S3, Cloudinary, Azure Blob).
-- **Automatic Article Video Detection**: Automatically detects YouTube and CDN video links within article copy and replaces them with an interactive 16:9 embedded player.
-- **SEO-Optimized Video Hero Promotion**:
-  - Automatically promotes detected videos to the main top hero banner in place of static images.
-  - Automatically deduplicates the video from the body text below.
-  - Generates Google-compliant **Schema.org `VideoObject`** structured data in JSON-LD for rich search results.
-  - Supports manual override with `?video=false` to view the static image banner.
-- **High-Performance Facade Poster**: Renders lightweight, high-res thumbnail posters with a custom gold play button that prevents heavy iframe scripts from loading until the user clicks play.
-- **Video Badging & Card Play Overlay**: Articles containing videos display a pulsing `● VIDEO` badge and gold hover play button in the directory grid.
+- **Primary / Stratosphere Navy**: `#011982` (`bg-primary`, `text-primary`, `border-primary`)
+- **Secondary / Parachute Gold (Amber)**: `#FBA713` (`bg-secondary`, `text-secondary`, `border-secondary`)
+- **Theme Tokens**: Defined as CSS variables in `src/app/globals.css` and exposed via Tailwind CSS v4 `@theme inline` (`--canvas`, `--panel`, `--line`, `--ink`, `--dim`).
+- **Dark/Light Toggling**: Fully integrated with `next-themes` and a client-side theme switcher that respects system preferences and persists user choices.
+- **Typography & Prose**: Custom `.article-prose` typography stylesheet ensuring optimal readability for long-form editorial content across all screen sizes.
 
-### 3. Side-by-Side Multilingual Localization
-- **Zero Hardcoded Copy**: All UI copy, navigation, hero headers, button labels, and FAQs are managed in type-safe content dictionaries (`src/lib/content/`).
-- **Side-by-Side Structure**: Translations are stored per field:
-  ```ts
-  title: {
-    en: "Experience 14,000 FT Freefall",
-    es: "Vive la Emoción a 14,000 Pies"
+---
+
+## 🌐 Centralized Multilingual Content (`src/lib/content/`)
+
+**Strict Policy: Zero hardcoded text in TSX/JSX components.**
+
+All site copy, navigation items, page headings, button labels, descriptions, and FAQs are centralized in typed dictionaries located in `src/lib/content/`:
+
+```
+src/lib/content/
+├── common.ts          # Global header, footer, navigation items, buttons
+├── home.ts            # Homepage hero, stats, reviews, USPA badges
+├── tandem.ts          # Tandem jump packages and altitude options
+├── learn.ts           # AFF solo pilot course syllabus and progression
+├── pricing.ts         # Jump rates, video packages, group discounts
+├── safety.ts          # Fleet aircraft specs, gear maintenance, instructor credentials
+├── about.ts           # Dropzone history, coordinates, facilities
+├── contact.ts         # Contact info, map directions, operating hours
+├── mega-menu.ts       # Desktop mega-menu links and preview cards
+├── landing.ts         # PPC campaign landing copy and conversion forms
+└── blog.ts            # Articles archive, filters, search, and author labels
+```
+
+### Side-by-Side Localization Structure
+Translations live directly side-by-side per field, allowing straightforward translation updates and future expansion:
+```ts
+export const homeContent = {
+  hero: {
+    title: {
+      en: "Experience 14,000 FT Freefall",
+      es: "Vive la Emoción a 14,000 Pies"
+    },
+    cta: {
+      en: "Book Your Jump",
+      es: "Reserva Tu Salto"
+    }
   }
-  ```
-- **Language Switcher**: Seamless language toggling with persistent locale cookies and localized canonical paths (`/en/...` and `/es/...`).
-
-### 4. Subdomain Campaign Landing Isolation
-- **Middleware Routing (`src/proxy.ts`)**: Requests from `landing.dallasskydivecenter.com` automatically route to `src/app/landing/` with an independent minimal layout and conversion tracking.
-
-### 5. Automated SEO & Structured Data Engine
-- **Schema.org Rich Snippets**:
-  - `BlogPosting` and `VideoObject` for article pages.
-  - `SportsActivityLocation` and `Organization` for the main dropzone business profile.
-- **Dynamic Localized Sitemap (`/sitemap.xml`)**: Automatically queries all published post slugs from TursoDB to dynamically generate indexable XML sitemap entries across all languages.
-- **Dynamic Robots (`/robots.txt`)**: Production search engine rules with direct sitemap index pointers.
-
-### 6. Design System & Theme Tokens
-- **Brand Palette**:
-  - **Stratosphere Navy**: `#011982` (`bg-primary`, `text-primary`)
-  - **Parachute Gold / Amber**: `#FBA713` (`bg-secondary`, `text-secondary`)
-- **Tailwind CSS v4 `@theme inline`**: CSS variable design tokens supporting seamless Dark and Light modes.
+};
+```
+Strings are resolved cleanly with `t(field, locale)` or `tList(list, locale)` from `@/lib/i18n/resolve`.
 
 ---
 
-## 📁 Project Directory Layout
+## 🎯 PPC Campaign Landing Pages (`landing.dallasskydivecenter.com`)
+
+The codebase houses dedicated campaign landing pages built specifically for **Google PPC and Paid Ad Campaigns**:
+
+- **Subdomain Routing**: Handled seamlessly in middleware (`src/proxy.ts`). Requests arriving on the `landing` subdomain (e.g. `landing.dallasskydivecenter.com`) automatically map to the isolated `src/app/landing/` directory.
+- **Isolated Layout & High Conversion**: Landing pages operate on their own independent minimal layout (`src/app/landing/[lang]/layout.tsx`), stripping away standard navigation to maximize booking conversion rates and eliminate lead leakage.
+- **Sitemap Exclusion**: Campaign landing routes are **strictly excluded** from the organic XML sitemap (`/sitemap.xml`) and indexed search results to protect PPC campaign tracking, prevent duplicate content penalties, and keep ad variations isolated.
+
+---
+
+## 🚀 Articles Engine & Media Streaming (`/articles`)
+
+### 1. Database-Driven Architecture (TursoDB)
+- **Zero 404s via Hybrid SSG + Dynamic ISR**: Pre-renders published articles at build time (`generateStaticParams`) while querying TursoDB at runtime for any unbuilt or newly published article slugs (`dynamicParams = true`, `revalidate = 60`).
+- **Markdown & HTML Rendering**: Supports both Markdown (`marked`) and raw HTML with automatic link parsing and sanitized output.
+- **Author Profiles & Recent Articles**: Hydrates author profiles dynamically from the database, generating brand initials badges or custom avatar photos, and displaying a grid of other recent articles by that author.
+
+### 2. Universal Media Player & Automatic Video Hero
+- **Multi-Source Support**: Streams YouTube videos (`watch`, `youtu.be`, `embed`, `shorts`) and direct CDN files (`.mp4`, `.webm`, `.mov`, DigitalOcean Spaces, S3, Cloudinary).
+- **Automatic Hero Media Promotion**:
+  - If an article contains a YouTube or video stream URL, the platform **automatically promotes the video to the top 16:9 hero media position**.
+  - **Deduplication**: Automatically removes the duplicate video from the body text below so it only appears once.
+  - **Bypass / Fallback Option**: The video hero can be explicitly bypassed by passing `?video=false` or `?main=false` in the URL to view the static featured image banner instead.
+- **Automatic Video Thumbnail Fallback**:
+  - If an article has no uploaded image in the database, the system automatically pulls the high-definition YouTube poster frame to use on the article archive grid.
+  - Cards containing videos display a pulsing `● VIDEO` badge and an animated gold Play button overlay on hover.
+- **SEO-Optimized Schema.org `VideoObject`**:
+  - Automatically injects Google-compliant `VideoObject` JSON-LD structured data with video thumbnail, title, description, and embed URL for rich video search results and carousels.
+
+---
+
+## 📁 Architecture & Directory Structure
 
 ```
 ├── .agents/                    # Agent rules and development standards
 ├── src/
 │   ├── app/
-│   │   ├── globals.css         # Theme tokens, dark/light CSS variables, article prose styles
+│   │   ├── globals.css         # Theme tokens, dark/light CSS variables, article-prose styles
 │   │   ├── icon.svg            # SVG Brand favicon
 │   │   ├── robots.ts           # Dynamic robots.txt
 │   │   ├── sitemap.ts          # Localized dynamic sitemap querying TursoDB
 │   │   ├── [lang]/             # Localized main site routes
-│   │   │   ├── layout.tsx      # Root localized layout (Header, Footer, ThemeProvider)
+│   │   │   ├── layout.tsx      # Root layout (Header, Footer, ThemeProvider)
 │   │   │   ├── page.tsx        # Homepage shell
 │   │   │   ├── articles/       # Articles directory archive & filter grid
 │   │   │   │   └── [slug]/     # Dynamic article view with Video Hero & Author card
@@ -80,7 +115,7 @@ The official website and publishing platform for **Dallas Skydive Center**, the 
 │   │   │   ├── about/
 │   │   │   ├── contact/
 │   │   │   └── book/
-│   │   └── landing/            # Subdomain campaign landing pages
+│   │   └── landing/            # Subdomain PPC campaign landing pages (excluded from sitemap)
 │   ├── components/
 │   │   ├── blog/               # ArticleHeader, ArticleBody, ArticleAuthorCard, BlogCard, etc.
 │   │   ├── brand/              # BrandMark, BrandLockup, SkydivingBadges
@@ -107,7 +142,7 @@ The official website and publishing platform for **Dallas Skydive Center**, the 
 | :--- | :--- |
 | **Framework** | Next.js 16 (App Router, Turbopack) |
 | **Language** | TypeScript |
-| **Styling** | Tailwind CSS v4 + Custom Design Tokens |
+| **Styling** | Tailwind CSS v4 + Design Tokens |
 | **Database** | TursoDB / libSQL (`@libsql/client`) |
 | **Markdown** | Marked (`marked`) |
 | **Icons** | Lucide React |
@@ -121,26 +156,22 @@ The official website and publishing platform for **Dallas Skydive Center**, the 
 - Node.js 18.18+ or Node.js 20+
 - Yarn or NPM
 
-### 2. Clone the Repository
+### 2. Clone & Install
 ```bash
 git clone https://github.com/sanity187/dfc-website.git
 cd dfc-website
-```
-
-### 3. Install Dependencies
-```bash
 yarn install
 ```
 
-### 4. Configure Environment Variables
-Create a `.env` file in the root directory:
+### 3. Configure Environment Variables
+Create a `.env` file in the project root:
 ```env
 # TursoDB Credentials for Articles Engine
 BLOG_URL="libsql://your-database-name.turso.io"
 BLOG_API_KEY="your-turso-database-auth-token"
 ```
 
-### 5. Run the Development Server
+### 4. Development Server
 ```bash
 yarn dev
 ```
@@ -150,39 +181,16 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📦 Build & Production
 
-To create an optimized production build:
 ```bash
+# Build optimized production bundle
 yarn build
-```
 
-To start the production server locally:
-```bash
+# Start local production server
 yarn start
-```
 
-To run lint checks:
-```bash
+# Run linting checks
 yarn lint
 ```
-
----
-
-## 📝 Content Management & Adding Articles
-
-Articles are stored dynamically in TursoDB. To publish a new article with embedded video:
-
-1. **Add a Post in `posts` table**:
-   - `title`: Article title
-   - `slug`: URL slug (e.g. `tandem-jump-experience`)
-   - `excerpt`: Summary snippet for search cards and meta descriptions
-   - `body_markdown`: Markdown content. Paste any YouTube URL (e.g. `https://www.youtube.com/watch?v=...`) on its own line to automatically render the embedded video player.
-   - `author_id`: Auth0 user ID mapping to the `users` table
-   - `status`: `'published'`
-   - `published_at`: ISO timestamp
-
-2. **Automatic Video Hero**:
-   - The first video link in the body is automatically promoted to the main 16:9 hero media at the top of the article.
-   - If no custom image is uploaded, the high-definition YouTube poster frame is automatically used as the card thumbnail on `/articles`.
 
 ---
 
