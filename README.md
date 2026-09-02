@@ -1,49 +1,49 @@
-# Dallas Skydive Center — Official Website & Publishing Platform
+# Dallas Skydive Center — Web Application & Publishing Architecture
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Database](https://img.shields.io/badge/Turso_DB-libSQL-44cc11?style=flat&logo=sqlite)](https://turso.tech/)
 
-The official web platform and high-conversion content engine for **Dallas Skydive Center**, serving the Dallas–Fort Worth metroplex with tandem skydiving reservations, solo licensing programs (AFF), safety fleet specifications, bilingual content localization, automated TursoDB article publishing, universal media streaming, and isolated campaign landing pages for Google Ads / PPC marketing.
+A Next.js 16 (App Router) web application featuring a bilingual side-by-side content architecture, a dynamic TursoDB publishing engine with automatic media extraction and video hero promotion, and isolated subdomain routing for PPC campaign landing pages.
 
 ---
 
 ## 🎨 Theme & Styling System
 
-The application features a modern, high-contrast visual design system with seamless **Light and Dark mode** support:
+The application uses Tailwind CSS v4 with design tokens exposed via `@theme inline` and CSS variables in `src/app/globals.css`:
 
-- **Primary / Stratosphere Navy**: `#011982` (`bg-primary`, `text-primary`, `border-primary`)
-- **Secondary / Parachute Gold (Amber)**: `#FBA713` (`bg-secondary`, `text-secondary`, `border-secondary`)
-- **Theme Tokens**: Defined as CSS variables in `src/app/globals.css` and exposed via Tailwind CSS v4 `@theme inline` (`--canvas`, `--panel`, `--line`, `--ink`, `--dim`).
-- **Dark/Light Toggling**: Fully integrated with `next-themes` and a client-side theme switcher that respects system preferences and persists user choices.
-- **Typography & Prose**: Custom `.article-prose` typography stylesheet ensuring optimal readability for long-form editorial content across all screen sizes.
+- **Primary**: `#011982` (`bg-primary`, `text-primary`, `border-primary`)
+- **Secondary / Accent**: `#FBA713` (`bg-secondary`, `text-secondary`, `border-secondary`)
+- **Canvas / Panel Tokens**: `--canvas`, `--panel`, `--line`, `--ink`, `--dim`
+- **Dark / Light Mode**: Managed via `next-themes` (`ThemeProvider`, `ThemeToggle`) with system preference detection and localStorage persistence.
+- **Article Typography**: Standardized via `.article-prose` in `src/app/globals.css` for rendered Markdown and HTML elements (`h2`, `h3`, `ul`, `ol`, `blockquote`, `table`, `code`).
 
 ---
 
-## 🌐 Centralized Multilingual Content (`src/lib/content/`)
+## 🌐 Content Architecture (`src/lib/content/`)
 
-**Strict Policy: Zero hardcoded text in TSX/JSX components.**
+**Architecture Rule: Zero hardcoded copy in TSX/JSX components.**
 
-All site copy, navigation items, page headings, button labels, descriptions, and FAQs are centralized in typed dictionaries located in `src/lib/content/`:
+All UI copy, route labels, navigation links, and descriptions reside in typed bilingual dictionaries in `src/lib/content/`:
 
 ```
 src/lib/content/
 ├── common.ts          # Global header, footer, navigation items, buttons
-├── home.ts            # Homepage hero, stats, reviews, USPA badges
-├── tandem.ts          # Tandem jump packages and altitude options
-├── learn.ts           # AFF solo pilot course syllabus and progression
-├── pricing.ts         # Jump rates, video packages, group discounts
-├── safety.ts          # Fleet aircraft specs, gear maintenance, instructor credentials
-├── about.ts           # Dropzone history, coordinates, facilities
-├── contact.ts         # Contact info, map directions, operating hours
-├── mega-menu.ts       # Desktop mega-menu links and preview cards
-├── landing.ts         # PPC campaign landing copy and conversion forms
-└── blog.ts            # Articles archive, filters, search, and author labels
+├── home.ts            # Homepage content, statistics, feature blocks
+├── tandem.ts          # Tandem jump packages and options
+├── learn.ts           # AFF training course syllabus and steps
+├── pricing.ts         # Rates, packages, and group pricing
+├── safety.ts          # Fleet specifications and safety standards
+├── about.ts           # Dropzone information, facilities, and coordinates
+├── contact.ts         # Contact info, map coordinates, and operating hours
+├── mega-menu.ts       # Desktop mega-menu navigation links and preview cards
+├── landing.ts         # Campaign landing page copy and form fields
+└── blog.ts            # Articles archive, filters, search, and author UI strings
 ```
 
-### Side-by-Side Localization Structure
-Translations live directly side-by-side per field, allowing straightforward translation updates and future expansion:
+### Bilingual Translation Schema
+Translations are structured side-by-side per field:
 ```ts
 export const homeContent = {
   hero: {
@@ -58,56 +58,57 @@ export const homeContent = {
   }
 };
 ```
-Strings are resolved cleanly with `t(field, locale)` or `tList(list, locale)` from `@/lib/i18n/resolve`.
+Resolved using `t(field, locale)` or `tList(list, locale)` from `@/lib/i18n/resolve`.
 
 ---
 
-## 🎯 PPC Campaign Landing Pages (`landing.dallasskydivecenter.com`)
+## 🎯 Subdomain Routing & PPC Campaign Landing Pages
 
-The codebase houses dedicated campaign landing pages built specifically for **Google PPC and Paid Ad Campaigns**:
+The project contains a separate routing structure for paid advertising (Google Ads / PPC) hosted on the `landing` subdomain (`landing.dallasskydivecenter.com`):
 
-- **Subdomain Routing**: Handled seamlessly in middleware (`src/proxy.ts`). Requests arriving on the `landing` subdomain (e.g. `landing.dallasskydivecenter.com`) automatically map to the isolated `src/app/landing/` directory.
-- **Isolated Layout & High Conversion**: Landing pages operate on their own independent minimal layout (`src/app/landing/[lang]/layout.tsx`), stripping away standard navigation to maximize booking conversion rates and eliminate lead leakage.
-- **Sitemap Exclusion**: Campaign landing routes are **strictly excluded** from the organic XML sitemap (`/sitemap.xml`) and indexed search results to protect PPC campaign tracking, prevent duplicate content penalties, and keep ad variations isolated.
+- **Middleware Routing (`src/proxy.ts`)**: Rewrites incoming requests with hostname `landing.*` directly to `src/app/landing/`.
+- **Isolated Layout**: Uses an independent, minimal layout (`src/app/landing/[lang]/layout.tsx`) without standard navigation to minimize bounce and increase conversion rates.
+- **Excluded from Sitemaps**: Landing pages are explicitly excluded from `/sitemap.xml` and robots indexing to maintain PPC attribution integrity and prevent duplicate content indexing.
 
 ---
 
 ## 🚀 Articles Engine & Media Streaming (`/articles`)
 
-### 1. Database-Driven Architecture (TursoDB)
-- **Zero 404s via Hybrid SSG + Dynamic ISR**: Pre-renders published articles at build time (`generateStaticParams`) while querying TursoDB at runtime for any unbuilt or newly published article slugs (`dynamicParams = true`, `revalidate = 60`).
-- **Markdown & HTML Rendering**: Supports both Markdown (`marked`) and raw HTML with automatic link parsing and sanitized output.
-- **Author Profiles & Recent Articles**: Hydrates author profiles dynamically from the database, generating brand initials badges or custom avatar photos, and displaying a grid of other recent articles by that author.
+### 1. Database Integration (TursoDB / libSQL)
+- **Hybrid SSG + Dynamic ISR**: Pre-renders known slugs via `generateStaticParams()` at build time, while dynamically resolving new or updated database entries at runtime with zero 404s (`dynamicParams = true`, `revalidate = 60`).
+- **Database Schema**:
+  - `posts`: `id`, `title`, `slug`, `excerpt`, `body_markdown`, `body_html`, `featured_image_url`, `author_id`, `author_name`, `status`, `published_at`, `created_at`, `updated_at`.
+  - `users`: `id`, `name`, `email`, `avatar_url`, `role`, `bio`.
+- **Author Hydration**: Author data is hydrated dynamically from the `users` table. Names default to `users.name` over legacy snapshot fields; avatars generate brand initials badges when no custom photo is provided.
+- **Author Recent Articles**: Queries other published posts by the same author (`getAuthorRecentPosts`), rendered in the author card with deep links to filtered archives (`/articles?author=...`).
 
-### 2. Universal Media Player & Automatic Video Hero
-- **Multi-Source Support**: Streams YouTube videos (`watch`, `youtu.be`, `embed`, `shorts`) and direct CDN files (`.mp4`, `.webm`, `.mov`, DigitalOcean Spaces, S3, Cloudinary).
-- **Automatic Hero Media Promotion**:
-  - If an article contains a YouTube or video stream URL, the platform **automatically promotes the video to the top 16:9 hero media position**.
-  - **Deduplication**: Automatically removes the duplicate video from the body text below so it only appears once.
-  - **Bypass / Fallback Option**: The video hero can be explicitly bypassed by passing `?video=false` or `?main=false` in the URL to view the static featured image banner instead.
-- **Automatic Video Thumbnail Fallback**:
-  - If an article has no uploaded image in the database, the system automatically pulls the high-definition YouTube poster frame to use on the article archive grid.
-  - Cards containing videos display a pulsing `● VIDEO` badge and an animated gold Play button overlay on hover.
-- **SEO-Optimized Schema.org `VideoObject`**:
-  - Automatically injects Google-compliant `VideoObject` JSON-LD structured data with video thumbnail, title, description, and embed URL for rich video search results and carousels.
+### 2. Universal Media Player & Video Hero
+- **Component**: `src/components/media/media-player.tsx`
+- **Supported Formats**: YouTube (`watch`, `youtu.be`, `embed`, `shorts`) and direct CDN streams (`.mp4`, `.webm`, `.mov`, DigitalOcean Spaces, S3, Cloudinary).
+- **Auto-Promotion to Hero**:
+  - If a video link exists in the article body (`body_markdown` or `body_html`), it is automatically extracted and rendered in the top 16:9 hero position.
+  - The video is automatically stripped from the body text below to prevent duplication.
+  - **Bypass Parameter**: Passing `?video=false` or `?main=false` in the URL bypasses the video hero and renders the static featured image banner instead.
+- **Thumbnail Fallback**: If `featured_image_url` is null, the system automatically pulls the video poster frame (e.g. YouTube `maxresdefault.jpg` / `hqdefault.jpg`) for the card grid.
+- **SEO Structured Data**: Injects Schema.org `VideoObject` structured data in JSON-LD alongside `BlogPosting` for rich video snippets in search engine results.
 
 ---
 
-## 📁 Architecture & Directory Structure
+## 📁 Project Structure
 
 ```
-├── .agents/                    # Agent rules and development standards
+├── .agents/                    # Agent guidelines and coding standards
 ├── src/
 │   ├── app/
-│   │   ├── globals.css         # Theme tokens, dark/light CSS variables, article-prose styles
-│   │   ├── icon.svg            # SVG Brand favicon
+│   │   ├── globals.css         # CSS variables, Tailwind v4 tokens, .article-prose styles
+│   │   ├── icon.svg            # SVG favicon
 │   │   ├── robots.ts           # Dynamic robots.txt
 │   │   ├── sitemap.ts          # Localized dynamic sitemap querying TursoDB
-│   │   ├── [lang]/             # Localized main site routes
+│   │   ├── [lang]/             # Localized application routes
 │   │   │   ├── layout.tsx      # Root layout (Header, Footer, ThemeProvider)
-│   │   │   ├── page.tsx        # Homepage shell
-│   │   │   ├── articles/       # Articles directory archive & filter grid
-│   │   │   │   └── [slug]/     # Dynamic article view with Video Hero & Author card
+│   │   │   ├── page.tsx        # Homepage
+│   │   │   ├── articles/       # Articles archive and filter grid
+│   │   │   │   └── [slug]/     # Dynamic article page with video hero and author module
 │   │   │   ├── tandem-skydiving/
 │   │   │   ├── learn-to-skydive/
 │   │   │   ├── pricing/
@@ -115,21 +116,21 @@ The codebase houses dedicated campaign landing pages built specifically for **Go
 │   │   │   ├── about/
 │   │   │   ├── contact/
 │   │   │   └── book/
-│   │   └── landing/            # Subdomain PPC campaign landing pages (excluded from sitemap)
+│   │   └── landing/            # Subdomain PPC landing pages (isolated from sitemap)
 │   ├── components/
 │   │   ├── blog/               # ArticleHeader, ArticleBody, ArticleAuthorCard, BlogCard, etc.
-│   │   ├── brand/              # BrandMark, BrandLockup, SkydivingBadges
+│   │   ├── brand/              # BrandMark, BrandLockup, Badges
 │   │   ├── layout/             # SiteHeader, SiteFooter, DesktopNav, MobileNav, LanguageSwitcher
-│   │   ├── media/              # Universal MediaPlayer component (YouTube & CDN)
-│   │   ├── primitives/         # Atomic UI elements (Eyebrow, DisplayTitle, SectionHeading, PageShell)
+│   │   ├── media/              # Universal MediaPlayer component
+│   │   ├── primitives/         # Reusable UI building blocks (Eyebrow, DisplayTitle, SectionHeading)
 │   │   ├── theme/              # ThemeProvider, ThemeToggle
-│   │   └── ui/                 # Accessible UI primitives (Button, Card, Badge)
-│   ├── hooks/                  # Custom single-purpose hooks (useMounted, etc.)
+│   │   └── ui/                 # Base UI primitives (Button, Card, Badge)
+│   ├── hooks/                  # Custom hooks (useMounted, etc.)
 │   └── lib/
-│       ├── blog/               # TursoDB client, typed queries, markdown parser, author helpers
-│       ├── content/            # Typed bilingual (EN/ES) dictionaries for all pages
-│       ├── i18n/               # Locale configuration, paths, string resolution, structured data
-│       ├── media/              # Video detection, thumbnail resolution, and embed injection
+│       ├── blog/               # TursoDB client, queries, markdown parser, author helpers
+│       ├── content/            # Bilingual EN/ES copy dictionaries
+│       ├── i18n/               # Localization config, paths, string resolution, structured data
+│       ├── media/              # Video detection, thumbnail resolution, embed injection
 │       ├── site-config.ts      # Dropzone coordinates, contact info, altitude specs
 │       └── utils.ts            # cn() class merging utility
 ```
@@ -142,53 +143,46 @@ The codebase houses dedicated campaign landing pages built specifically for **Go
 | :--- | :--- |
 | **Framework** | Next.js 16 (App Router, Turbopack) |
 | **Language** | TypeScript |
-| **Styling** | Tailwind CSS v4 + Design Tokens |
+| **Styling** | Tailwind CSS v4 |
 | **Database** | TursoDB / libSQL (`@libsql/client`) |
-| **Markdown** | Marked (`marked`) |
+| **Markdown Parsing** | Marked (`marked`) |
 | **Icons** | Lucide React |
-| **Theming** | next-themes (Dark & Light mode) |
+| **Theming** | next-themes |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Environment & Setup
 
-### 1. Prerequisites
+### 1. Requirements
 - Node.js 18.18+ or Node.js 20+
 - Yarn or NPM
 
-### 2. Clone & Install
+### 2. Installation
 ```bash
 git clone https://github.com/sanity187/dfc-website.git
 cd dfc-website
 yarn install
 ```
 
-### 3. Configure Environment Variables
-Create a `.env` file in the project root:
+### 3. Environment Variables
+Create `.env` in the root directory:
 ```env
-# TursoDB Credentials for Articles Engine
 BLOG_URL="libsql://your-database-name.turso.io"
 BLOG_API_KEY="your-turso-database-auth-token"
 ```
 
-### 4. Development Server
+### 4. Development & Build Commands
 ```bash
+# Start development server
 yarn dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
-
-## 📦 Build & Production
-
-```bash
-# Build optimized production bundle
+# Create optimized production build
 yarn build
 
-# Start local production server
+# Run local production server
 yarn start
 
-# Run linting checks
+# Execute ESLint checks
 yarn lint
 ```
 
