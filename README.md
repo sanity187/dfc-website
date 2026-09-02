@@ -5,7 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Database](https://img.shields.io/badge/Turso_DB-libSQL-44cc11?style=flat&logo=sqlite)](https://turso.tech/)
 
-A Next.js 16 (App Router) web application featuring a bilingual side-by-side content architecture, a headless CMS articles integration consuming from an external Blogger App (via TursoDB libSQL URL and API key), automatic media extraction with video hero promotion, and isolated subdomain routing for PPC campaign landing pages.
+A Next.js 16 (App Router) web application featuring an extensible multi-language (i18n) content architecture, a headless CMS articles integration consuming from an external Blogger App (via TursoDB libSQL URL and API key), automatic media extraction with video hero promotion, and isolated subdomain routing for PPC campaign landing pages.
 
 ---
 
@@ -25,7 +25,7 @@ The application uses Tailwind CSS v4 with design tokens exposed via `@theme inli
 
 **Architecture Rule: Zero hardcoded copy in TSX/JSX components.**
 
-All UI copy, route labels, navigation links, and descriptions reside in typed bilingual dictionaries in `src/lib/content/`:
+All UI copy, route labels, navigation links, and descriptions reside in typed multi-language dictionaries in `src/lib/content/`:
 
 ```
 src/lib/content/
@@ -42,23 +42,24 @@ src/lib/content/
 └── blog.ts            # Articles archive, filters, search, and author UI strings
 ```
 
-### Bilingual Translation Schema
-Translations are structured side-by-side per field:
+### Multilingual Translation Schema
+Translations are structured side-by-side per field, allowing seamless addition of any future locales:
 ```ts
 export const homeContent = {
   hero: {
     title: {
       en: "Experience 14,000 FT Freefall",
-      es: "Vive la Emoción a 14,000 Pies"
+      es: "Vive la Emoción a 14,000 Pies",
+      // Easily expandable to additional languages: fr, de, pt, etc.
     },
     cta: {
       en: "Book Your Jump",
-      es: "Reserva Tu Salto"
+      es: "Reserva Tu Salto",
     }
   }
 };
 ```
-Resolved using `t(field, locale)` or `tList(list, locale)` from `@/lib/i18n/resolve`.
+Resolved dynamically using `t(field, locale)` or `tList(list, locale)` from `@/lib/i18n/resolve`.
 
 ---
 
@@ -130,7 +131,7 @@ The project contains a separate routing structure for paid advertising (Google A
 │   ├── hooks/                  # Custom hooks (useMounted, etc.)
 │   └── lib/
 │       ├── blog/               # TursoDB client, queries, markdown parser, author helpers
-│       ├── content/            # Bilingual EN/ES copy dictionaries
+│       ├── content/            # Typed multi-language copy dictionaries
 │       ├── i18n/               # Localization config, paths, string resolution, structured data
 │       ├── media/              # Video detection, thumbnail resolution, embed injection
 │       ├── site-config.ts      # Dropzone coordinates, contact info, altitude specs
