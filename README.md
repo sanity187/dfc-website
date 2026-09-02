@@ -1,11 +1,11 @@
-# Dallas Skydive Center — Web Application & Publishing Architecture
+# Dallas Skydive Center — Web Application Architecture
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38bdf8?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178c6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Database](https://img.shields.io/badge/Turso_DB-libSQL-44cc11?style=flat&logo=sqlite)](https://turso.tech/)
 
-A Next.js 16 (App Router) web application featuring a bilingual side-by-side content architecture, a dynamic TursoDB publishing engine with automatic media extraction and video hero promotion, and isolated subdomain routing for PPC campaign landing pages.
+A Next.js 16 (App Router) web application featuring a bilingual side-by-side content architecture, a headless CMS articles integration consuming from an external Blogger App (via TursoDB libSQL URL and API key), automatic media extraction with video hero promotion, and isolated subdomain routing for PPC campaign landing pages.
 
 ---
 
@@ -72,11 +72,13 @@ The project contains a separate routing structure for paid advertising (Google A
 
 ---
 
-## 🚀 Articles Engine & Media Streaming (`/articles`)
+## 🚀 Headless Articles Consumer & Media Streaming (`/articles`)
 
-### 1. Database Integration (TursoDB / libSQL)
-- **Hybrid SSG + Dynamic ISR**: Pre-renders known slugs via `generateStaticParams()` at build time, while dynamically resolving new or updated database entries at runtime with zero 404s (`dynamicParams = true`, `revalidate = 60`).
-- **Database Schema**:
+### 1. Headless CMS Integration (Blogger App via TursoDB)
+- **External Publishing Architecture**: This website does **not** contain an internal admin editor or publishing UI. Content authoring is handled entirely in an external 3rd-party application (**Blogger App**). The Blogger App provisions an organization-specific database endpoint and access key (`BLOG_URL`, `BLOG_API_KEY`).
+- **Read-Only Data Consumer**: This Next.js application acts solely as a consumer/renderer, querying the database via `@libsql/client` to fetch published articles, author records, categories, and tags.
+- **Hybrid SSG + Dynamic ISR (Zero 404s)**: Pre-renders known slugs via `generateStaticParams()` at build time, while dynamically querying and rendering newly created slugs from the database on-demand (`dynamicParams = true`, `revalidate = 60`).
+- **Read-Only Schema Consumed**:
   - `posts`: `id`, `title`, `slug`, `excerpt`, `body_markdown`, `body_html`, `featured_image_url`, `author_id`, `author_name`, `status`, `published_at`, `created_at`, `updated_at`.
   - `users`: `id`, `name`, `email`, `avatar_url`, `role`, `bio`.
 - **Author Hydration**: Author data is hydrated dynamically from the `users` table. Names default to `users.name` over legacy snapshot fields; avatars generate brand initials badges when no custom photo is provided.
