@@ -27,6 +27,11 @@ export async function constructLocalizedMetadata(
         es: localizedPath("es", "/"),
       },
     },
+    icons: {
+      icon: [{ url: "/favicon.png", type: "image/png" }],
+      shortcut: "/favicon.png",
+      apple: "/images/logo.png",
+    },
     openGraph: {
       type: "website",
       siteName: siteConfig.name,

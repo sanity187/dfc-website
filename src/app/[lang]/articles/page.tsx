@@ -10,6 +10,7 @@ import { getPublishedPosts, getAllCategories } from "@/lib/blog/queries";
 import { BlogCard } from "@/components/blog/blog-card";
 import { BlogFeaturedHero } from "@/components/blog/blog-featured-hero";
 import { BlogFilters } from "@/components/blog/blog-filters";
+import { BreadcrumbTrail } from "@/components/primitives/breadcrumb-trail";
 import { siteConfig } from "@/lib/site-config";
 
 interface ArticlesPageProps {
@@ -80,6 +81,13 @@ export default async function ArticlesIndexPage({ params, searchParams }: Articl
 
   return (
     <div className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      {/* Breadcrumb Navigation Trail */}
+      <BreadcrumbTrail
+        items={[{ label: t(blogContent.header.title, locale), href: "/articles" }]}
+        locale={locale}
+        className="mb-8"
+      />
+
       {/* Header Banner */}
       <div className="text-center max-w-3xl mx-auto mb-12">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-secondary/15 px-4 py-1 text-xs font-bold text-secondary mb-4 border border-secondary/20">

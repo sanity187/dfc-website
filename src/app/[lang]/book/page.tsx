@@ -3,7 +3,9 @@ import { isLocale, defaultLocale, type Locale } from "@/lib/i18n/config";
 import { t } from "@/lib/i18n/resolve";
 import { commonActions } from "@/lib/content/common";
 import { siteConfig } from "@/lib/site-config";
-import { PageShell } from "@/components/primitives/page-shell";
+import { PageHeroHeader } from "@/components/primitives/page-hero-header";
+import { JsonLd } from "@/components/seo/json-ld";
+import { generateBreadcrumbJsonLd } from "@/lib/i18n/structured-data";
 
 export async function generateMetadata({
   params,
@@ -27,22 +29,30 @@ export default async function BookPage({
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
   const bookNow = t(commonActions.bookNow, locale);
+  const breadcrumbItems = [{ label: bookNow, href: "/book" }];
+  const breadcrumbSchema = generateBreadcrumbJsonLd(locale, [
+    { name: bookNow, path: "/book" },
+  ]);
 
   return (
-    <PageShell
-      eyebrow="RESERVATIONS"
-      title={<span className="text-secondary">{bookNow}</span>}
-      subtitle="Select your preferred date, jump time, and video package."
-      badge="Instant Online Confirmation"
-    >
-      <div className="flex justify-center">
+    <>
+      <JsonLd data={breadcrumbSchema} />
+      <PageHeroHeader
+        breadcrumbs={breadcrumbItems}
+        locale={locale}
+        eyebrow="RESERVATIONS"
+        title={<span className="text-secondary">{bookNow}</span>}
+        subtitle="Select your preferred date, jump time, and video package."
+        badge="Instant Online Confirmation"
+      />
+      <div className="mx-auto max-w-5xl w-full px-4 sm:px-6 lg:px-8 py-12 flex justify-center">
         <a
           href={siteConfig.bookingUrl}
-          className="rounded-lg bg-secondary px-8 py-4 text-lg font-bold text-secondary-foreground shadow transition-opacity hover:opacity-95"
+          className="rounded-xl bg-secondary px-8 py-4 text-lg font-bold text-secondary-foreground shadow-lg transition-opacity hover:opacity-95"
         >
           {bookNow} (External Booking Portal)
         </a>
       </div>
-    </PageShell>
+    </>
   );
 }

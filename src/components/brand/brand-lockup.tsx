@@ -24,7 +24,11 @@ export function BrandLockup({
       aria-label="Dallas Skydive Center Home"
     >
       <div className="relative shrink-0">
-        <BrandMark className="h-9 w-9 transition-transform duration-300 group-hover:scale-105" size={36} />
+        <BrandMark
+          className="h-10 w-10 sm:h-11 sm:w-11 transition-transform duration-300 group-hover:scale-105 drop-shadow-sm"
+          size={44}
+          priority
+        />
       </div>
 
       <div className="flex flex-col justify-center">

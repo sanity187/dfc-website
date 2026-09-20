@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isLocale, defaultLocale, type Locale } from "@/lib/i18n/config";
 import { t } from "@/lib/i18n/resolve";
 import { learnContent } from "@/lib/content/learn";
-import { PageShell } from "@/components/primitives/page-shell";
+import { PageHeroHeader } from "@/components/primitives/page-hero-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/i18n/structured-data";
 
@@ -27,14 +27,17 @@ export default async function LearnToSkydivePage({
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
   const title = t(learnContent.title, locale);
-  const breadcrumbs = generateBreadcrumbJsonLd(locale, [
+  const breadcrumbItems = [{ label: title, href: "/learn-to-skydive" }];
+  const breadcrumbSchema = generateBreadcrumbJsonLd(locale, [
     { name: title, path: "/learn-to-skydive" },
   ]);
 
   return (
     <>
-      <JsonLd data={breadcrumbs} />
-      <PageShell
+      <JsonLd data={breadcrumbSchema} />
+      <PageHeroHeader
+        breadcrumbs={breadcrumbItems}
+        locale={locale}
         eyebrow={t(learnContent.eyebrow, locale)}
         title={<span className="text-primary">{title}</span>}
         subtitle={t(learnContent.subtitle, locale)}

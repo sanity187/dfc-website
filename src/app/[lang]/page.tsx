@@ -1,7 +1,7 @@
 import { isLocale, defaultLocale, type Locale } from "@/lib/i18n/config";
-import { t } from "@/lib/i18n/resolve";
 import { homeContent } from "@/lib/content/home";
-import { PageShell } from "@/components/primitives/page-shell";
+import { HomeHero } from "@/components/sections/home/home-hero";
+import { HomeReviewsSection } from "@/components/sections/home/reviews/reviews-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateFaqJsonLd } from "@/lib/i18n/structured-data";
 
@@ -17,17 +17,11 @@ export default async function HomePage({
   return (
     <>
       <JsonLd data={faqSchema} />
-      <PageShell
-        eyebrow={t(homeContent.hero.eyebrow, locale)}
-        title={
-          <>
-            <span className="text-primary">{t(homeContent.hero.titlePrimary, locale)}</span>{" "}
-            <span className="text-secondary">{t(homeContent.hero.titleSecondary, locale)}</span>
-          </>
-        }
-        subtitle={t(homeContent.hero.subtitle, locale)}
-        badge={t(homeContent.hero.altitudeCallout, locale)}
+      <HomeHero
+        locale={locale}
+        backgroundOptions={{ startTime: 80, endTime: 120, tintAmount: 0.85 }}
       />
+      <HomeReviewsSection locale={locale} />
     </>
   );
 }

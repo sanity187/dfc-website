@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isLocale, defaultLocale, type Locale } from "@/lib/i18n/config";
 import { t } from "@/lib/i18n/resolve";
 import { safetyContent } from "@/lib/content/safety";
-import { PageShell } from "@/components/primitives/page-shell";
+import { PageHeroHeader } from "@/components/primitives/page-hero-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/i18n/structured-data";
 
@@ -27,14 +27,17 @@ export default async function SafetyFleetPage({
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
   const title = t(safetyContent.title, locale);
-  const breadcrumbs = generateBreadcrumbJsonLd(locale, [
+  const breadcrumbItems = [{ label: title, href: "/safety-fleet" }];
+  const breadcrumbSchema = generateBreadcrumbJsonLd(locale, [
     { name: title, path: "/safety-fleet" },
   ]);
 
   return (
     <>
-      <JsonLd data={breadcrumbs} />
-      <PageShell
+      <JsonLd data={breadcrumbSchema} />
+      <PageHeroHeader
+        breadcrumbs={breadcrumbItems}
+        locale={locale}
         eyebrow={t(safetyContent.eyebrow, locale)}
         title={<span className="text-primary">{title}</span>}
         subtitle={t(safetyContent.subtitle, locale)}
