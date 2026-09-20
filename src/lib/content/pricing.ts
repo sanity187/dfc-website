@@ -32,12 +32,15 @@ export interface PricingPolicyItem {
   amount: string;
   description: I18nString;
   highlight?: boolean;
+  badge?: I18nString;
 }
 
 export interface PricingRestrictionItem {
   title: I18nString;
   detail: I18nString;
   icon: string;
+  highlight?: boolean;
+  badge?: I18nString;
 }
 
 export interface PricingContent {
@@ -381,7 +384,6 @@ export const pricingContent: PricingContent = {
           en: "Jumpers over 200 lbs pay a $35 heavy student fee. Maximum weight is 240 lbs for males and 220 lbs for females. For safety, students exceeding maximum weight on our official scale will not jump and fees are non-refundable.",
           es: "Cualquier persona que pese más de 200 lbs debe pagar una tarifa de $35. El peso máximo es 240 lbs en hombres y 220 lbs en mujeres. Por seguridad estricta, quien exceda el peso no podrá saltar y no hay reembolsos.",
         },
-        highlight: true,
       },
       {
         id: "booking-fee",
@@ -405,6 +407,11 @@ export const pricingContent: PricingContent = {
         description: {
           en: "48 hours advance notice is required on all reservation adjustments. Any changes requested with less than 48 hours notice incur a $50 reschedule fee per person.",
           es: "Se requieren al menos 48 horas de anticipación para cualquier cambio. Modificaciones con menos de 48 horas conllevan un cargo de $50 por persona.",
+        },
+        highlight: true,
+        badge: {
+          en: "Strict Policy · Plan Ahead",
+          es: "Política Estricta · Planifica con Tiempo",
         },
       },
       {
@@ -449,6 +456,11 @@ export const pricingContent: PricingContent = {
           es: "Se requiere identificación oficial con fotografía vigente (licencia o pasaporte) al registrarte. Sin excepciones.",
         },
         icon: "IdCard",
+        highlight: true,
+        badge: {
+          en: "Mandatory · Bring ID!",
+          es: "Obligatorio · Sin Excepciones",
+        },
       },
       {
         title: { en: "Weight Limits", es: "Límites de Peso" },
