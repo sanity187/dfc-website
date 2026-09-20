@@ -39,8 +39,8 @@ export interface LocalizedMegaMenuCategory {
 export const megaMenuContent = {
   categories: [
     {
-      id: "experiences",
-      label: { en: "Tandem Skydiving", es: "Salto Tándem" },
+      id: "skydiving",
+      label: { en: "Skydiving", es: "Paracaidismo" },
       href: "/tandem-skydiving",
       featured: {
         tag: { en: "14,000 FT HIGHEST EXIT", es: "14,000 PIES LA MAYOR ALTURA" },
@@ -54,161 +54,109 @@ export const megaMenuContent = {
       },
       links: [
         {
-          title: { en: "14,000 FT Tandem Skydive", es: "Salto Tándem a 14,000 Pies" },
+          title: { en: "14,000 FT Tandem Jump", es: "Salto Tándem a 14,000 Pies" },
           description: {
-            en: "The ultimate first-timer leap from 2.5 miles up",
-            es: "El salto esencial para principiantes desde 2.5 millas de altura",
+            en: "The essential first-time leap with 60s freefall from 2.5 miles high",
+            es: "El salto esencial para principiantes con 60s de caída libre",
           },
           href: "/tandem-skydiving",
-          badge: { en: "Most Popular", es: "Más Popular" },
+          badge: { en: "Popular", es: "Popular" },
           iconName: "plane",
+        },
+        {
+          title: { en: "Learn to Skydive (AFF Solo)", es: "Aprende a Saltar Solo (AFF)" },
+          description: {
+            en: "8-hour ground school and progression to your official USPA A-license",
+            es: "Escuela en tierra y ruta estructurada para tu licencia oficial USPA",
+          },
+          href: "/learn-to-skydive",
+          badge: { en: "A-License", es: "Licencia A" },
+          iconName: "graduation",
         },
         {
           title: { en: "4K HD Video & Photos", es: "Video 4K HD y Fotos" },
           description: {
-            en: "Dedicated camera flyers & multi-angle cockpit footage",
+            en: "Dedicated freefall camera flyers and cockpit departure footage",
             es: "Camarógrafos en el aire y tomas en cabina de alta resolución",
           },
           href: "/pricing",
-          badge: { en: "4K Video", es: "Video 4K" },
+          badge: { en: "Save $10", es: "Ahorra $10" },
           iconName: "camera",
         },
         {
-          title: { en: "Sunset Skydiving Jumps", es: "Saltos al Atardecer" },
+          title: { en: "Groups & Celebrations", es: "Grupos y Celebraciones" },
           description: {
-            en: "Golden hour freefall with breathtaking Texas views",
-            es: "Caída libre en la hora dorada con vistas impresionantes de Texas",
-          },
-          href: "/tandem-skydiving",
-          iconName: "sun",
-        },
-        {
-          title: { en: "Groups & Corporate Events", es: "Grupos y Eventos Corporativos" },
-          description: {
-            en: "Bachelor/bachelorette parties, team outings & $20 group discounts",
-            es: "Despedidas, cumpleaños, empresas y descuentos de $20 por persona",
+            en: "Birthdays, bachelor/ettes, corporate teams & group rate discounts",
+            es: "Cumpleaños, despedidas, empresas y tarifas especiales de grupo",
           },
           href: "/pricing",
-          badge: { en: "Save $20/ea", es: "Ahorra $20 c/u" },
+          badge: { en: "5+ Jumpers", es: "5+ Personas" },
           iconName: "users",
         },
       ],
     },
     {
-      id: "learn",
-      label: { en: "Learn Solo (AFF)", es: "Aprende Solo (AFF)" },
-      href: "/learn-to-skydive",
-      featured: {
-        tag: { en: "USPA A-LICENSE", es: "LICENCIA 'A' USPA" },
-        title: { en: "Accelerated Freefall Course", es: "Curso de Caída Libre Acelerada" },
-        description: {
-          en: "Graduate from ground school to solo certified skydiver in an 8-category program.",
-          es: "Gradúate de la escuela en tierra a paracaidista certificado en 8 categorías.",
-        },
-        href: "/learn-to-skydive",
-        cta: { en: "View AFF Program", es: "Ver Programa AFF" },
-      },
-      links: [
-        {
-          title: { en: "First Jump Course (FJC)", es: "Curso del Primer Salto (FJC)" },
-          description: {
-            en: "8-hour ground school + Category A solo training jump",
-            es: "8 horas de clase teórica + salto de entrenamiento Categoría A",
-          },
-          href: "/learn-to-skydive",
-          badge: { en: "Start Here", es: "Empieza Aquí" },
-          iconName: "graduation",
-        },
-        {
-          title: { en: "Full 'A' License Path", es: "Ruta a la Licencia 'A'" },
-          description: {
-            en: "25-jump structured solo progression to world certification",
-            es: "25 saltos estructurados para obtener tu licencia internacional",
-          },
-          href: "/learn-to-skydive",
-          iconName: "award",
-        },
-        {
-          title: { en: "Advanced Coaching & Rigging", es: "Entrenamiento Avanzado" },
-          description: {
-            en: "Canopy flight piloting, formation freefly & FAA packing",
-            es: "Vuelo en campana, formaciones y plegado certificado",
-          },
-          href: "/safety-fleet",
-          iconName: "compass",
-        },
-        {
-          title: { en: "Licensed Jumpers & Gear Loft", es: "Paracaidistas Licenciados" },
-          description: {
-            en: "Turbine load tickets, gear checks & packing facilities",
-            es: "Boletos de salto en turbina, revisión de equipo y hangares",
-          },
-          href: "/about",
-          iconName: "wind",
-        },
-      ],
-    },
-    {
       id: "dropzone",
-      label: { en: "Safety & Fleet", es: "Seguridad y Flota" },
-      href: "/safety-fleet",
+      label: { en: "The Dropzone", es: "La Zona" },
+      href: "/about",
       featured: {
         tag: { en: "CLOSEST TO DALLAS", es: "LA MÁS CERCA DE DALLAS" },
-        title: { en: "36 Miles from Downtown", es: "A 36 Millas del Centro" },
+        title: { en: "36 Miles East on I-30", es: "A 36 Millas por la I-30" },
         description: {
-          en: "Full-service aviation campus in Caddo Mills with private spectator deck & turbine aircraft.",
-          es: "Campus de aviación en Caddo Mills con terraza para espectadores y aviones de turbina.",
+          en: "Caddo Mills Municipal Airport campus with a 3,600 sq ft AC hangar and 651-acre lawn.",
+          es: "Campus en el aeropuerto de Caddo Mills con hangar climatizado y césped de 651 acres.",
         },
         href: "/contact",
         cta: { en: "Get Driving Directions", es: "Cómo Llegar" },
       },
       links: [
         {
-          title: { en: "Aviation Safety & Rig Standards", es: "Seguridad y Estándares de Equipo" },
+          title: { en: "Aviation Safety & Standards", es: "Seguridad y Normas de Aviación" },
           description: {
-            en: "100% USPA certified masters & Cypres 2 AAD computer backups",
-            es: "100% instructores USPA y respaldo computarizado AAD Cypres 2",
+            en: "100% USPA certified staff, FAA maintenance & Cypres 2 AAD backups",
+            es: "100% instructores USPA, mantenimiento FAA y respaldo AAD Cypres 2",
           },
           href: "/safety-fleet",
-          badge: { en: "100% Certified", es: "100% Certificado" },
+          badge: { en: "Safety", es: "Seguridad" },
           iconName: "shield",
         },
         {
-          title: { en: "Turbine Jump Aircraft Fleet", es: "Flota de Aeronaves de Turbina" },
+          title: { en: "Super Cessna Aircraft Fleet", es: "Flota de Aviones Super Cessna" },
           description: {
-            en: "High-climb turboprop jump planes reaching 14,000 FT in 15 mins",
-            es: "Aviones turbohélice que alcanzan 14,000 pies en solo 15 minutos",
+            en: "High-climb jump planes reaching 14,000 FT in record ascent times",
+            es: "Aeronaves de alto rendimiento que alcanzan 14,000 pies rápidamente",
           },
           href: "/safety-fleet",
           iconName: "plane",
         },
         {
-          title: { en: "Dropzone Amenities & Lounge", es: "Instalaciones y Terraza" },
+          title: { en: "About Our Dropzone & Team", es: "Sobre la Zona y Nuestro Equipo" },
           description: {
-            en: "Spectator viewing deck, air-conditioned suites & picnic lawns",
-            es: "Áreas de observación, salas climatizadas y jardines",
+            en: "25+ years serving DFW with 75,000+ safe completed skydives",
+            es: "Más de 25 años en DFW con más de 75,000 saltos completados",
           },
           href: "/about",
           iconName: "compass",
         },
         {
-          title: { en: "Location & DFW Driving Times", es: "Ubicación y Tiempos de Viaje" },
+          title: { en: "Directions & DFW Travel Times", es: "Ubicación e Indicaciones" },
           description: {
-            en: "35 mins from Dallas, 45 mins from Fort Worth via Interstate",
-            es: "35 mins desde Dallas, 45 mins desde Fort Worth por autopista",
+            en: "Straight shot on I-30 East past Rockwall and Royse City Buc-ee's",
+            es: "Directo por la I-30 Este pasando Rockwall y el Buc-ee's de Royse City",
           },
           href: "/contact",
+          badge: { en: "36 Miles", es: "36 Millas" },
           iconName: "map",
         },
       ],
     },
     {
       id: "articles",
-      label: { en: "Articles & Guides", es: "Artículos y Guías" },
+      label: { en: "Articles", es: "Artículos" },
       href: "/articles",
       featured: {
-        tag: { en: "FEATURED ARTICLE", es: "ARTÍCULO DESTACADO" },
-        title: { en: "Is Skydiving Safe? Real Risks & Standards", es: "¿Es Seguro el Paracaidismo? Riesgos y Estándares" },
+        tag: { en: "FEATURED GUIDE", es: "GUÍA DESTACADA" },
+        title: { en: "Is Skydiving Safe? Real Risks & Stats", es: "¿Es Seguro el Paracaidismo? Estadísticas Reales" },
         description: {
           en: "Explore skydiving safety with stats, training protocols, modern equipment checks, and common myths debunked.",
           es: "Descubre estadísticas de seguridad, protocolos de entrenamiento, equipo moderno y mitos desmentidos.",
@@ -219,16 +167,6 @@ export const megaMenuContent = {
         cta: { en: "Read Article", es: "Leer Artículo" },
       },
       links: [
-        {
-          title: { en: "All Articles & News", es: "Todos los Artículos" },
-          description: {
-            en: "Browse our directory of skydiving guides, stories & dropzone updates",
-            es: "Explora nuestro directorio completo de guías, historias y novedades",
-          },
-          href: "/articles",
-          badge: { en: "Browse All", es: "Ver Todos" },
-          iconName: "book-open",
-        },
         {
           title: { en: "Skydiving Safety & Stats", es: "Seguridad y Estadísticas" },
           description: {
@@ -249,7 +187,7 @@ export const megaMenuContent = {
           iconName: "help-circle",
         },
         {
-          title: { en: "Solo Training & AFF Guides", es: "Entrenamiento Solo y AFF" },
+          title: { en: "Solo Training & Progression", es: "Entrenamiento Solo y Progresión" },
           description: {
             en: "Progression to solo A-license, canopy flying & ground school",
             es: "Progresión a tu licencia A en solitario y escuela en tierra",
@@ -257,12 +195,21 @@ export const megaMenuContent = {
           href: "/learn-to-skydive",
           iconName: "graduation",
         },
+        {
+          title: { en: "Browse All Articles & News", es: "Todos los Artículos y Novedades" },
+          description: {
+            en: "Explore our complete library of skydiving guides and updates",
+            es: "Explora nuestra biblioteca completa de guías e historias",
+          },
+          href: "/articles",
+          badge: { en: "Directory", es: "Directorio" },
+          iconName: "book-open",
+        },
       ],
     },
   ] as LocalizedMegaMenuCategory[],
   directLinks: [
     { label: { en: "Pricing", es: "Precios" }, href: "/pricing" },
-    { label: { en: "Dropzone", es: "Zona" }, href: "/about" },
     { label: { en: "Contact", es: "Contacto" }, href: "/contact" },
   ],
   quickBookPanel: {

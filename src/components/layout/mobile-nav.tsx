@@ -175,10 +175,10 @@ export function MobileNav({ locale }: MobileNavProps) {
                                 onClick={closeDrawer}
                                 className="flex flex-col rounded-xl border border-line/50 bg-panel p-3 transition-colors hover:bg-muted/70 touch-manipulation"
                               >
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between gap-2">
                                   <span className="text-sm font-bold text-ink">{title}</span>
                                   {badge && (
-                                    <span className="rounded-full bg-secondary/15 px-2 py-0.5 text-[10px] font-bold text-secondary">
+                                    <span className="shrink-0 whitespace-nowrap rounded-full bg-secondary/15 border border-secondary/30 px-2 py-0.5 text-[10px] font-bold text-secondary leading-none">
                                       {badge}
                                     </span>
                                   )}
