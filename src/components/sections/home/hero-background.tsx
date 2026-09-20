@@ -51,8 +51,8 @@ export function HeroBackground({
         style={{ opacity }}
       />
 
-      {/* 4. Smooth Bottom Edge Blend into Main Page Content */}
-      <div className="absolute bottom-0 left-0 right-0 h-36 bg-gradient-to-t from-background via-background/60 to-transparent" />
+      {/* 4. Bottom Edge Blend: In dark mode, blend into the dark canvas. In light mode, preserve video contrast with a clean dark edge rather than a milky gray haze */}
+      <div className="absolute bottom-0 left-0 right-0 h-20 bg-linear-to-t from-black/70 via-black/30 to-transparent dark:from-background dark:via-background/60" />
     </div>
   );
 }

@@ -23,7 +23,7 @@ export function HomeHero({
   return (
     <section
       aria-label="Dallas Skydive Center Home Introduction"
-      className="relative min-h-[100vh] w-full flex flex-col justify-center items-center overflow-hidden px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 pb-14"
+      className="relative min-h-[calc(100svh-7.5rem)] w-full flex flex-col justify-center items-center overflow-hidden px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 border-b border-black/10 dark:border-transparent"
     >
       {/* 1. Full-bleed Ambient & Video Background Layer */}
       <HeroBackground
@@ -39,7 +39,7 @@ export function HomeHero({
       />
 
       {/* 2. Main Hero Interactive & Scannable Content Container */}
-      <div className="relative z-10 mx-auto max-w-5xl w-full flex flex-col items-center gap-7 sm:gap-8 my-auto">
+      <div className="relative z-10 mx-auto max-w-5xl w-full flex flex-col items-center justify-center gap-4 sm:gap-5 lg:gap-6 my-auto">
         <HeroBadge
           eyebrow={t(hero.eyebrow, locale)}
           altitudeCallout={t(hero.altitudeCallout, locale)}

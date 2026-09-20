@@ -11,8 +11,8 @@ export function HeroStats({ stats, locale }: HeroStatsProps) {
   if (!stats || stats.length === 0) return null;
 
   return (
-    <div className="w-full max-w-5xl mx-auto pt-4 sm:pt-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+    <div className="w-full max-w-5xl mx-auto pt-1 sm:pt-2">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3.5">
         {stats.map((stat, idx) => {
           const value = t(stat.value, locale);
           const label = t(stat.label, locale);
@@ -21,15 +21,15 @@ export function HeroStats({ stats, locale }: HeroStatsProps) {
           return (
             <div
               key={idx}
-              className="flex flex-col items-center text-center p-3.5 sm:p-4 rounded-xl border border-white/15 bg-black/40 backdrop-blur-md shadow-lg transition-transform hover:-translate-y-0.5"
+              className="flex flex-col items-center text-center p-2.5 sm:p-3 lg:p-3.5 rounded-xl border border-white/15 bg-black/40 backdrop-blur-md shadow-lg transition-transform hover:-translate-y-0.5"
             >
               <div className="text-xl sm:text-2xl lg:text-3xl font-black text-secondary tracking-tight">
                 {value}
               </div>
-              <div className="mt-1 text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+              <div className="mt-0.5 text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">
                 {label}
               </div>
-              <p className="mt-1 hidden sm:block text-[11px] leading-tight text-slate-300 line-clamp-2">
+              <p className="mt-0.5 hidden sm:block text-[11px] leading-tight text-slate-300 line-clamp-2">
                 {description}
               </p>
             </div>

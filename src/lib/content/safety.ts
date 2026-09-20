@@ -19,12 +19,12 @@ export const safetyContent = {
     es: "Cada aeronave, paracaídas y protocolo de vuelo cumple o supera las normas de la FAA y la USPA.",
   },
   aircraftHeading: {
-    en: "Dedicated Turbine Jump Aircraft",
-    es: "Aeronaves de Salto con Turbina Dedicadas",
+    en: "Dedicated Cessna 182 Jump Fleet",
+    es: "Flota Exclusiva de Salto Cessna 182",
   },
   aircraftText: {
-    en: "Maintained under strict FAA Part 91/135 continuous inspection programs with certified aviation powerplants.",
-    es: "Mantenidas bajo rigurosos programas de inspección continua de la FAA con plantas de poder certificadas.",
+    en: "Specifically modified for skydiving and maintained under strict FAA continuous inspection programs.",
+    es: "Especialmente adaptadas para paracaidismo y mantenidas bajo rigurosos programas de inspección continua de la FAA.",
   },
   gearHeading: {
     en: "State-of-the-Art Dual Parachute Systems",
