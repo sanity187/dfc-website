@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowRight, Phone, Calendar } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import { t } from "@/lib/i18n/resolve";
@@ -29,14 +30,14 @@ export function AboutCtaSection({ locale }: AboutCtaSectionProps) {
         </p>
 
         <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
-          <a
-            href={siteConfig.bookingUrl}
+          <Link
+            href={`/${locale}/book`}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-secondary px-7 py-3.5 text-base font-extrabold text-secondary-foreground shadow-md transition-all hover:bg-secondary/90 hover:scale-105 active:scale-95"
           >
             <Calendar className="h-5 w-5" />
             <span>{t(cta.primaryBtn, locale)}</span>
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </Link>
 
           <a
             href={`tel:${siteConfig.phoneRaw}`}

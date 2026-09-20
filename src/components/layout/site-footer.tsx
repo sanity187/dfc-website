@@ -104,12 +104,12 @@ export function SiteFooter({ locale }: SiteFooterProps) {
                 </div>
               </div>
             </div>
-            <a
-              href={siteConfig.bookingUrl}
+            <Link
+              href={localizedPath(locale, "/book")}
               className="mt-2 inline-flex items-center justify-center rounded-xl bg-secondary px-5 py-2.5 text-xs font-extrabold text-secondary-foreground shadow-md transition-all hover:opacity-95 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-secondary focus-visible:outline-none"
             >
               {t(commonActions.bookNow, locale)}
-            </a>
+            </Link>
           </div>
         </div>
 

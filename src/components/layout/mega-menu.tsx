@@ -25,6 +25,7 @@ import { type Locale } from "@/lib/i18n/config";
 import { localizedPath } from "@/lib/i18n/paths";
 import { t } from "@/lib/i18n/resolve";
 import { megaMenuContent, LocalizedMegaMenuLink } from "@/lib/content/mega-menu";
+import { commonActions } from "@/lib/content/common";
 import { siteConfig } from "@/lib/site-config";
 
 interface MegaMenuProps {
@@ -252,13 +253,14 @@ export function MegaMenu({ locale, content }: MegaMenuProps) {
                           <Phone className="h-3.5 w-3.5 text-secondary" />
                           <span>{siteConfig.phone}</span>
                         </a>
-                        <a
-                          href={siteConfig.bookingUrl}
+                        <Link
+                          href={`/${locale}/book`}
+                          onClick={closeMenu}
                           className="flex items-center gap-1.5 font-bold text-secondary hover:underline"
                         >
                           <Calendar className="h-3.5 w-3.5" />
-                          <span>Book Online</span>
-                        </a>
+                          <span>{t(commonActions.bookNow, locale)}</span>
+                        </Link>
                       </div>
                     </div>
                   </div>

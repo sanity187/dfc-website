@@ -25,13 +25,13 @@ export function HeroActions({
       {/* Dual CTA Button Row */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3.5 w-full">
         {/* Primary Direct Booking Action */}
-        <a
-          href={siteConfig.bookingUrl}
+        <Link
+          href={localizedPath(locale, "/book")}
           className="group relative inline-flex items-center justify-center gap-2 w-full sm:w-auto min-w-[190px] rounded-xl bg-secondary px-6 py-3 sm:py-3.5 text-sm sm:text-base font-extrabold text-secondary-foreground shadow-xl transition-all duration-200 hover:brightness-105 hover:scale-[1.02] active:scale-[0.98]"
         >
           <span>{primaryCtaText}</span>
           <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-        </a>
+        </Link>
 
         {/* Secondary Informational Link */}
         <Link

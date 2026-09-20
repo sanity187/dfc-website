@@ -223,13 +223,14 @@ export function MobileNav({ locale }: MobileNavProps) {
                   {t(megaMenuContent.quickBookPanel.subtitle, locale)}
                 </p>
 
-                <a
-                  href={siteConfig.bookingUrl}
+                <Link
+                  href={`/${locale}/book`}
+                  onClick={() => setIsOpen(false)}
                   className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-secondary py-3.5 text-sm font-black text-secondary-foreground shadow-md transition-transform active:scale-[0.98] touch-manipulation"
                 >
                   <Calendar className="h-4 w-4" />
                   <span>{t(commonActions.bookNow, locale)}</span>
-                </a>
+                </Link>
 
                 <a
                   href={`tel:${siteConfig.phoneRaw}`}

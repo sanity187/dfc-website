@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Calendar } from "lucide-react";
 import { type Locale } from "@/lib/i18n/config";
 import { t } from "@/lib/i18n/resolve";
@@ -46,15 +47,15 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
 
         {/* Right: Gold CTA Button */}
         <div className="hidden items-center gap-4 lg:flex shrink-0">
-          <a
-            href={siteConfig.bookingUrl}
+          <Link
+            href={`/${locale}/book`}
             className={`inline-flex items-center gap-2 rounded-xl bg-secondary font-black whitespace-nowrap text-secondary-foreground shadow-md transition-all hover:opacity-95 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
               isScrolled ? "px-5 py-2 text-xs" : "px-6 py-2.5 text-sm"
             }`}
           >
             <Calendar className="h-4 w-4" />
             <span>{bookNow}</span>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Navigation Drawer Trigger */}
