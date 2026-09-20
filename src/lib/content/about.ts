@@ -88,8 +88,8 @@ export const aboutContent: AboutContent = {
       es: "¡¡CÁLLATE Y SALTA!!",
     },
     subtitle: {
-      en: "The closest premier dropzone to Dallas–Fort Worth, combining military-grade safety, dedicated Cessna 182 aircraft, and pure Texas skydiving hospitality.",
-      es: "La zona de salto más cercana a Dallas–Fort Worth, combinando seguridad de grado militar, flota Cessna 182 y la mejor hospitalidad texana.",
+      en: "Overcome the noise, trust your training, and feel the ultimate freedom of 14,000 feet.",
+      es: "Supera el ruido, confía en tu preparación y siente la libertad absoluta a 14,000 pies.",
     },
     badge: {
       en: "The official Dallas Skydive Center motto since day one",
