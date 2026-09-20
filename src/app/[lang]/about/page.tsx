@@ -5,6 +5,13 @@ import { aboutContent } from "@/lib/content/about";
 import { PageHeroHeader } from "@/components/primitives/page-hero-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/i18n/structured-data";
+import { siteConfig } from "@/lib/site-config";
+import { AboutMottoBanner } from "@/components/sections/about/about-motto-banner";
+import { AboutStorySection } from "@/components/sections/about/about-story-section";
+import { AboutPillarsGrid } from "@/components/sections/about/about-pillars-grid";
+import { AboutInstructorSpotlight } from "@/components/sections/about/about-instructor-spotlight";
+import { AboutAmenitiesSection } from "@/components/sections/about/about-amenities-section";
+import { AboutCtaSection } from "@/components/sections/about/about-cta-section";
 
 export async function generateMetadata({
   params,
@@ -14,8 +21,8 @@ export async function generateMetadata({
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
   return {
-    title: t(aboutContent.title, locale),
-    description: t(aboutContent.subtitle, locale),
+    title: t(aboutContent.header.title, locale),
+    description: t(aboutContent.header.subtitle, locale),
   };
 }
 
@@ -26,23 +33,56 @@ export default async function AboutPage({
 }) {
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
-  const title = t(aboutContent.title, locale);
+  const title = t(aboutContent.header.title, locale);
   const breadcrumbItems = [{ label: title, href: "/about" }];
   const breadcrumbSchema = generateBreadcrumbJsonLd(locale, [
     { name: title, path: "/about" },
   ]);
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    name: siteConfig.name,
+    description: t(aboutContent.header.subtitle, locale),
+    url: "https://www.dallasskydivecenter.com/about",
+    telephone: siteConfig.phone,
+    founder: {
+      "@type": "Person",
+      name: "Jimmy Mendonca",
+      jobTitle: "Chief Instructor",
+    },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: siteConfig.address.street,
+      addressLocality: siteConfig.address.city,
+      addressRegion: siteConfig.address.state,
+      postalCode: siteConfig.address.zip,
+      addressCountry: "US",
+    },
+  };
+
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={organizationSchema} />
+
       <PageHeroHeader
         breadcrumbs={breadcrumbItems}
         locale={locale}
-        eyebrow={t(aboutContent.eyebrow, locale)}
+        eyebrow={t(aboutContent.header.eyebrow, locale)}
         title={<span className="text-primary">{title}</span>}
-        subtitle={t(aboutContent.subtitle, locale)}
-        badge="25+ Years of Aviation Excellence"
+        subtitle={t(aboutContent.header.subtitle, locale)}
+        badge={t(aboutContent.header.badge, locale)}
       />
+
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 flex flex-col gap-14 sm:gap-20">
+        <AboutMottoBanner locale={locale} />
+        <AboutStorySection locale={locale} />
+        <AboutPillarsGrid locale={locale} />
+        <AboutInstructorSpotlight locale={locale} />
+        <AboutAmenitiesSection locale={locale} />
+        <AboutCtaSection locale={locale} />
+      </div>
     </>
   );
 }
