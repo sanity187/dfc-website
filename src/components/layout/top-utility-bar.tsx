@@ -6,13 +6,21 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 interface TopUtilityBarProps {
   locale: Locale;
+  collapsed?: boolean;
 }
 
-export function TopUtilityBar({ locale }: TopUtilityBarProps) {
+export function TopUtilityBar({ locale, collapsed = false }: TopUtilityBarProps) {
   const isSpanish = locale === "es";
 
   return (
-    <div className="hidden border-b border-line/60 bg-muted/60 text-xs font-medium text-dim transition-colors md:block">
+    <div
+      className={`hidden bg-muted/60 text-xs font-medium text-dim overflow-hidden transition-all duration-300 ease-in-out md:block border-b ${
+        collapsed
+          ? "h-0 opacity-0 -translate-y-2 pointer-events-none border-transparent"
+          : "h-9 opacity-100 translate-y-0 border-line/60"
+      }`}
+      aria-hidden={collapsed}
+    >
       <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left Side: Location & Aviation Dropzone Status */}
         <div className="flex items-center gap-4">

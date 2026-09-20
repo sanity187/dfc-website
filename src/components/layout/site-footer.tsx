@@ -17,11 +17,11 @@ export function SiteFooter({ locale }: SiteFooterProps) {
   return (
     <footer className="border-t border-line bg-panel transition-colors" role="contentinfo">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {/* Col 1: Brand & Bio */}
-          <div className="flex flex-col gap-4">
-            <BrandLockup locale={locale} />
-            <p className="text-sm text-dim leading-relaxed">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12">
+          {/* Col 1: Brand & Bio (4 cols) */}
+          <div className="flex flex-col gap-4 lg:col-span-4">
+            <BrandLockup locale={locale} variant="footer" />
+            <p className="text-sm text-dim leading-relaxed max-w-sm">
               {t(footerContent.tagline, locale)}
             </p>
             <div className="flex items-center gap-2 text-xs font-semibold text-primary">
@@ -30,8 +30,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             </div>
           </div>
 
-          {/* Col 2: Quick Links */}
-          <div className="flex flex-col gap-3">
+          {/* Col 2: Quick Links (2 cols) */}
+          <div className="flex flex-col gap-3 lg:col-span-2">
             <h3 className="text-xs font-bold uppercase tracking-wider text-ink">
               {t(footerContent.quickLinks, locale)}
             </h3>
@@ -49,8 +49,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             </ul>
           </div>
 
-          {/* Col 3: Contact & Location */}
-          <div className="flex flex-col gap-3">
+          {/* Col 3: Contact & Location (3 cols) */}
+          <div className="flex flex-col gap-3 lg:col-span-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-ink">
               {t(footerContent.contactHeader, locale)}
             </h3>
@@ -90,8 +90,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             </ul>
           </div>
 
-          {/* Col 4: Hours & Booking */}
-          <div className="flex flex-col gap-3">
+          {/* Col 4: Hours & Booking (3 cols) */}
+          <div className="flex flex-col gap-3 lg:col-span-3">
             <h3 className="text-xs font-bold uppercase tracking-wider text-ink">
               {t(footerContent.hoursHeader, locale)}
             </h3>
@@ -106,7 +106,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
             </div>
             <a
               href={siteConfig.bookingUrl}
-              className="mt-2 inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-sm transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+              className="mt-2 inline-flex items-center justify-center rounded-xl bg-secondary px-5 py-2.5 text-xs font-extrabold text-secondary-foreground shadow-md transition-all hover:opacity-95 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-secondary focus-visible:outline-none"
             >
               {t(commonActions.bookNow, locale)}
             </a>
