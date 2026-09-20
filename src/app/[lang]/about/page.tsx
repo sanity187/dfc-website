@@ -6,7 +6,6 @@ import { PageHeroHeader } from "@/components/primitives/page-hero-header";
 import { JsonLd } from "@/components/seo/json-ld";
 import { generateBreadcrumbJsonLd } from "@/lib/i18n/structured-data";
 import { siteConfig } from "@/lib/site-config";
-import { AboutMottoBanner } from "@/components/sections/about/about-motto-banner";
 import { AboutStorySection } from "@/components/sections/about/about-story-section";
 import { AboutPillarsGrid } from "@/components/sections/about/about-pillars-grid";
 import { AboutInstructorSpotlight } from "@/components/sections/about/about-instructor-spotlight";
@@ -20,8 +19,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
+  const pageTitle = aboutContent.header.pageTitle
+    ? t(aboutContent.header.pageTitle, locale)
+    : "About Dallas Skydive Center";
+  const motto = t(aboutContent.header.title, locale);
   return {
-    title: t(aboutContent.header.title, locale),
+    title: `${pageTitle} — “${motto}”`,
     description: t(aboutContent.header.subtitle, locale),
   };
 }
@@ -33,10 +36,13 @@ export default async function AboutPage({
 }) {
   const { lang } = await params;
   const locale: Locale = isLocale(lang) ? lang : defaultLocale;
-  const title = t(aboutContent.header.title, locale);
-  const breadcrumbItems = [{ label: title, href: "/about" }];
+  const pageTitle = aboutContent.header.pageTitle
+    ? t(aboutContent.header.pageTitle, locale)
+    : "About Dallas Skydive Center";
+  const motto = t(aboutContent.header.title, locale);
+  const breadcrumbItems = [{ label: pageTitle, href: "/about" }];
   const breadcrumbSchema = generateBreadcrumbJsonLd(locale, [
-    { name: title, path: "/about" },
+    { name: pageTitle, path: "/about" },
   ]);
 
   const organizationSchema = {
@@ -70,13 +76,21 @@ export default async function AboutPage({
         breadcrumbs={breadcrumbItems}
         locale={locale}
         eyebrow={t(aboutContent.header.eyebrow, locale)}
-        title={<span className="text-primary">{title}</span>}
+        title={
+          <span className="flex flex-col gap-1.5">
+            <span className="text-xl sm:text-2xl font-bold tracking-normal text-ink/80">
+              {pageTitle}
+            </span>
+            <span className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-secondary uppercase italic">
+              “{motto}”
+            </span>
+          </span>
+        }
         subtitle={t(aboutContent.header.subtitle, locale)}
         badge={t(aboutContent.header.badge, locale)}
       />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 flex flex-col gap-14 sm:gap-20">
-        <AboutMottoBanner locale={locale} />
         <AboutStorySection locale={locale} />
         <AboutPillarsGrid locale={locale} />
         <AboutInstructorSpotlight locale={locale} />

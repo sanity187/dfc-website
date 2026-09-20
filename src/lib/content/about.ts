@@ -18,6 +18,7 @@ export interface AboutAmenityItem {
 export interface AboutContent {
   header: {
     eyebrow: I18nString;
+    pageTitle?: I18nString;
     title: I18nString;
     subtitle: I18nString;
     badge: I18nString;
@@ -78,17 +79,21 @@ export const aboutContent: AboutContent = {
       en: "OUR HERITAGE & PASSION",
       es: "NUESTRA HISTORIA Y PASIÓN",
     },
-    title: {
+    pageTitle: {
       en: "About Dallas Skydive Center",
       es: "Acerca de Dallas Skydive Center",
+    },
+    title: {
+      en: "SHUT UP AND JUMP!!",
+      es: "¡¡CÁLLATE Y SALTA!!",
     },
     subtitle: {
       en: "The closest premier dropzone to Dallas–Fort Worth, combining military-grade safety, dedicated Cessna 182 aircraft, and pure Texas skydiving hospitality.",
       es: "La zona de salto más cercana a Dallas–Fort Worth, combinando seguridad de grado militar, flota Cessna 182 y la mejor hospitalidad texana.",
     },
     badge: {
-      en: "USPA Certified Dropzone",
-      es: "Zona Certificada por USPA",
+      en: "The official Dallas Skydive Center motto since day one",
+      es: "El lema oficial de Dallas Skydive Center desde el primer día",
     },
   },
   motto: {
